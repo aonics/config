@@ -1,0 +1,26 @@
+[user]
+	email = antoha.polischuk@gmail.com
+	name = Anton Polischuk
+[alias]
+	sla = log --oneline --decorate --graph --all
+	history = log --pretty=format:'%C(yellow)%h%C(reset) - %an %C(green)[%ar]%C(reset) %s'
+	unstage = reset
+	uncommit = reset --soft HEAD^
+	git = status
+	devup = !git checkout develop && git pull && git checkout -
+	co = checkout
+	dev-update = !git co develop && git pull && git co -
+	line = log --oneline
+	last-branches = for-each-ref --sort=-committerdate refs/heads/
+	files = diff --name-status
+	stash-unstaged = stash push -k -u
+	pop = !git stash pop && git unstage
+	delete-merged-branch = git branch --merged dev | grep -v 'dev$' | xargs git branch -d
+	empty = commit -m "Trigger" --allow-empty
+[core]
+	editor = vim
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
