@@ -1,26 +1,31 @@
 [user]
 	email = antoha.polischuk@gmail.com
 	name = Anton Polischuk
+
 [alias]
 	sla = log --oneline --decorate --graph --all
 	history = log --pretty=format:'%C(yellow)%h%C(reset) - %an %C(green)[%ar]%C(reset) %s'
 	unstage = reset
 	uncommit = reset --soft HEAD^
 	git = status
-	devup = !git checkout develop && git pull && git checkout -
+  list = stash list
+	i = status
 	co = checkout
-	dev-update = !git co develop && git pull && git co -
 	line = log --oneline
+  l = log --pretty=format:'%C(yellow)%h%C(reset) %C(green)[%ar]%C(reset) %s %C(yellow)%an%C(reset)'
 	last-branches = for-each-ref --sort=-committerdate refs/heads/
 	files = diff --name-status
 	stash-unstaged = stash push -k -u
 	pop = !git stash pop && git unstage
 	delete-merged-branch = git branch --merged dev | grep -v 'dev$' | xargs git branch -d
 	empty = commit -m "Trigger" --allow-empty
+  amend = commit --amend --no-e
+
+#  find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+#  show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+
 [core]
 	editor = vim
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+
+[init]
+	defaultBranch = dev

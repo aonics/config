@@ -1,13 +1,20 @@
 call plug#begin('~/.vim/plugged')
-"
+" ### VIM TREE
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"
-""syntax higilight
-Plug 'pangloss/vim-javascript'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
+" ### AIRLINE
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"colorschemaes
+Plug 'tomasiser/vim-code-dark'
+
+
+""syntax higilight
+"Plug 'pangloss/vim-javascript'
+
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'leafgarland/typescript-vim'
+"Plug 'Quramy/tsuquyomi'
 "Plug 'ianks/vim-tsx'
 "Plug 'ycm-core/YouCompleteMe'
 "Plug 'ianks/vim-tsx'
@@ -22,14 +29,11 @@ Plug 'Quramy/tsuquyomi'
 "" motion across text
 "Plug 'easymotion/vim-easymotion'
 "Plug 'justinmk/vim-sneak'
-"
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+
+
 "
 "Plug 'tpope/vim-surround'
 "
-"colorschemaes
-Plug 'tomasiser/vim-code-dark'
 "
 "" eslint
 ""Plug 'dense-analysis/ale'
@@ -52,35 +56,50 @@ Plug 'tomasiser/vim-code-dark'
 "
 call plug#end()
 
-autocmd FileType typescript setlocal completeopt-=menu
-let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
-autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
-autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
-set ballooneval
-autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
-autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-"" set filetypes as typescript.tsx
-"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-""mapping
+" ### MAPPING
 let mapleader=','
-"
-"" Enable deoplete at startup
-""let g:deoplete#enable_at_startup = 1
-"
-map <C-n> ;NERDTreeToggle<CR>
-"
-"map <leader>v ;vsplit<space>
-"
+
 imap ii <esc>
 imap jj <esc>
 imap kk <esc>
-"
+
+map <C-n> ;NERDTreeToggle<CR>
+
 map <Leader><Leader>e ;e $MYVIMRC<CR>
 map <s-L> <s-L>zz
 map <s-H> <s-H>zz
-"
+
+map <leader>d ;bdelete<Cr>
+map <C-l> ;bn<Cr>
+map <C-h> ;bp<Cr>
+
+nnoremap ; :
+nnoremap : ;
+
+"""" ###AIRLINE###
+"""" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+let g:airline_theme = 'codedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_section_y = '%{strftime("%c")}'
+colorscheme codedark
+
+"autocmd FileType typescript setlocal completeopt-=menu
+"let g:tsuquyomi_completion_detail = 1
+"let g:tsuquyomi_disable_quickfix = 1
+"let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+"autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+"autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
+"set ballooneval
+"autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+"autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+"" set filetypes as typescript.tsx
+"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+
+"" Enable deoplete at startup
+""let g:deoplete#enable_at_startup = 1
+"map <leader>v ;vsplit<space>
 "" splits
 "map <A-j> <c-W>j
 "map <A-Down> <c-W>j
@@ -100,37 +119,26 @@ map <s-H> <s-H>zz
 "" resize vertical split window
 "nmap <C-Right> <C-W>><C-W>>
 "nmap <C-Left> <C-W><<C-W><
-"
 "map <leader><tab> ;CtrlPBuffer<Cr>
-map <leader>d ;bdelete<Cr>
-"
-map <C-l> ;bn<Cr>
-map <C-h> ;bp<Cr>
-"
-nnoremap ; :
-nnoremap : ;
-"
 "map <A-S> ;ALEFix prettier<CR>
+"map <C-\> ;vert bel sp<bar>terminal<CR>
 "
-"map <C-\> ;vert bel sp<bar>terminal<CR> 
 "
 ""searching
 "let g:ackprg = 'ag --nogroup --nocolor --ignore package-lock.json'
 "map <leader>f ;Ack!<space>
 "
-set termguicolors
-set clipboard=unnamedplus
-set shell=\"C:/Program\ Files/Git/bin/sh.exe\"
-tnoremap <Esc> <C-\><C-n>
-tnoremap ii <C-\><C-n>
+"set termguicolors
+"set clipboard=unnamedplus
+"set shell=\"C:/Program\ Files/Git/bin/sh.exe\"
+"tnoremap <Esc> <C-\><C-n>
+"tnoremap ii <C-\><C-n>
 "
 "" Prettier or eslint
 "" Fix files with prettier, and then ESLint.
 ""let b:ale_fixers = ['prettier', 'eslint']
 ""let g:ale_fix_on_save = 1
-"
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
+
 "nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "let g:ale_open_list = 1
@@ -150,12 +158,6 @@ let g:airline#extensions#ale#enabled = 1
 "" sneak
 "let g:sneak#label = 1
 "
-" themes
-let g:airline_theme = 'codedark'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_section_y = '%{strftime("%c")}'
-colorscheme codedark
 
 " tabs
 set number
@@ -170,12 +172,12 @@ set encoding=UTF-8
 
 
 ""coc-config
-let g:coc_global_extensions = [
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-prettier',
-  \ 'coc-json',
-  \ ]
+"let g:coc_global_extensions = [
+"  \ 'coc-pairs',
+"  \ 'coc-tsserver',
+"  \ 'coc-prettier',
+"  \ 'coc-json',
+"  \ ]
 "
 "" if hidden is not set, TextEdit might fail.
 "set hidden
@@ -311,7 +313,7 @@ let g:coc_global_extensions = [
 " let g:typescript_indent_disable = 1
 
 " set filetypes as typescript.tsx
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 " dark red
 "hi tsxTagName guifg=#7fffd4
 "
@@ -436,7 +438,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -488,7 +490,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
